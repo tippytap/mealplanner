@@ -25,6 +25,7 @@ import {
   signOut
 } from 'firebase/auth';
 
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDtlm30NsiMgjKoIZ7LweZfyLJbRWDjuwc",
