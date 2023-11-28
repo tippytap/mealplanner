@@ -25,15 +25,14 @@ import {
   signOut
 } from 'firebase/auth';
 
-
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDtlm30NsiMgjKoIZ7LweZfyLJbRWDjuwc",
-  authDomain: "meal-planner-18e6f.firebaseapp.com",
-  projectId: "meal-planner-18e6f",
-  storageBucket: "meal-planner-18e6f.appspot.com",
-  messagingSenderId: "641983342902",
-  appId: "1:641983342902:web:f575145df7ccfac0c8ab97"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
