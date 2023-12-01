@@ -15,7 +15,7 @@ export default function App() {
 
     <AuthProvider>
       <div className="App">
-        <header className="App-header" style={{marginBottom: "1em"}}>
+        <header className="App-header" style={{margin: "1em 0"}}>
           <Stack direction="column" spacing={2}>
             <Typography variant="h1" sx={{fontSize: "3rem", borderBottom: "1px solid grey"}} mt={2}>Meal Planner</Typography>
             <Logout />

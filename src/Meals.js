@@ -26,13 +26,10 @@ function Meals() {
     }, [user])
 
     return (
-        <>
-            {/* {console.log(authValue)} */}
-            <Container maxWidth="xl">
-                <MealForm />
-                <MealList meals={meals} />
-            </Container>
-        </>
+        <Container maxWidth="xl">
+            <MealForm />
+            <MealList meals={meals} />
+        </Container>
     )
 }
 
