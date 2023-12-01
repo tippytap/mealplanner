@@ -6,21 +6,30 @@ import { createMeal, getMeals, deleteMeal, updateMealDoc } from './Firebase';
 import MealForm from './MealForm';
 import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, Container, Grid } from '@mui/material';
 import { useMealContext } from './MealContext';
+import { useAuthContext } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 function Meals() {
 
-    const authValue = useContext(AuthContext);
-
     const {meals} = useMealContext();
 
+    const {auth} = useAuthContext();
+    const [user] = useAuthState(auth);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            navigate("/");
+        }
+    }, [user])
+
     return (
-        <>
-            {/* {console.log(authValue)} */}
-            <Container maxWidth="xl">
-                <MealForm />
-                <MealList meals={meals} />
-            </Container>
-        </>
+        <Container maxWidth="xl">
+            <MealForm />
+            <MealList meals={meals} />
+        </Container>
     )
 }
 
