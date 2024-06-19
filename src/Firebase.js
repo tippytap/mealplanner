@@ -53,6 +53,14 @@ export const createMeal = async (mealName, category) => {
   });
 }
 
+export const createCategory = async (categoryName) => {
+  const categoryColRef = collection(db, 'categories');
+  await addDoc(categoryColRef, {
+    name: categoryName,
+    createdOn: new Date()
+  });
+}
+
 // Update a meal in the Firestore
 export const updateMealDoc = async (meal) => {
   const mealRef = doc(db, 'meals', meal.docId);
@@ -79,6 +87,24 @@ export const getMeals = async () => {
     })
   })
   return meals;
+}
+
+/**
+ * Returns promise
+ */
+export const getCategory = (categoryName) => {
+  const q = query(collection(db, 'categories'), where('name', '==', categoryName));
+  return getDocs(q);
+}
+
+export const getCategories = async () => {
+  const q = query(collection(db, 'categories'), where('name', '!=', 'undefined'));
+  let snapshot = await getDocs(q);
+  const categories = [];
+  snapshot.forEach((doc) => {
+    categories.push(doc.data().name);
+  })
+  return categories;
 }
 
 export const login = (email, password) => {

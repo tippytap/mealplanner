@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, Container, Grid } from '@mui/material';
 import Meal from './Meal';
 import { useMealContext } from './MealContext';
-import { categories } from './categories';
 
 export default function MealList(props) {
 
@@ -35,7 +34,7 @@ export default function MealList(props) {
 
 export const MealFilterButtons = () => {
 
-    const {filter, updateFilter} = useMealContext();
+    const {filter, updateFilter, categories} = useMealContext();
 
     const handleClick = (e) => {
         updateFilter(e.target.name);
@@ -43,9 +42,9 @@ export const MealFilterButtons = () => {
 
     return (
         <Stack direction="row" spacing={2} justifyContent={"center"} mt={3}>
-            {Object.keys(categories()).map((category) => {
+            {categories.map((category) => {
                 return (
-                    <Button variant={filter === categories()[category] ? "contained" : "text"} onClick={handleClick} name={categories()[category]} key={category}>{category}</Button>
+                    <Button variant={filter === category ? "contained" : "text"} onClick={handleClick} name={category} key={category}>{category}</Button>
                 )
             })}
         </Stack>
