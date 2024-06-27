@@ -5,9 +5,11 @@ import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import Meals from "./Meals.js";
 import Login from "./Login.js";
 import { MealProvider } from './MealContext.js';
+import { ListProvider } from './ListContext.js';
 import { Typography, Stack } from '@mui/material';
 import { AuthProvider } from './AuthContext.js';
 import Logout from "./Logout";
+import List from "./Lists.js";
 
 export default function App() {
 
@@ -23,13 +25,16 @@ export default function App() {
         </header>
         <main style={{marginBottom: "5rem"}}>
           <MealProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route exact path="/" element={<Login />} />
-                <Route path="/Meals" element={<Meals />} />
-                <Route path="/Login" element={<Login />} />
-              </Routes>
-            </BrowserRouter>
+            <ListProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route exact path="/" element={<Login />} />
+                  <Route path="/Meals" element={<Meals />} />
+                  <Route path="/Login" element={<Login />} />
+                  <Route path="/Lists" element={<List />} />
+                </Routes>
+              </BrowserRouter>
+            </ListProvider>
           </MealProvider>
         </main>
       </div>
