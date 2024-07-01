@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
 import {styles} from './Styles';
 import { useListContext } from './ListContext';
+import { Link } from 'react-router-dom';
 
 
 export default function List(props) {
@@ -68,7 +69,8 @@ export default function List(props) {
     return (
         <Card variant="outlined" sx={{position: "relative", paddingTop: "1em", height: "100%"}}>
         <Stack justifyContent={"space-between"} sx={{height: "100%"}}>
-          <CardHeader title={props.title} mt="1" />
+          {props.slug && <Link to={`/Lists/${props.slug}`}><CardHeader mt="1" title={props.title} /></Link>}
+          {!props.slug && <CardHeader mt="1" title={props.title} />}
           <CardContent sx={{height: "100%"}}>
             <Stack spacing={2}>
               <Button
@@ -90,6 +92,7 @@ export default function List(props) {
                 })}
               </Stack>
               <Stack sx={{marginBottom: "1em"}} divider={<Divider />}>
+                <Typography mb={1}>{completedItems.length > 0 && `${completedItems.length} completed item${completedItems.length > 1 ? "s" : ""}`}</Typography>
                 {completedItems.map((item, i) => {
                   return (
                         <ListItem title={item.title} id={item.id} key={item.id + "-complete-" + i} complete={item.complete} delete={handleDeleteListItem} oncheck={handleCheck} />

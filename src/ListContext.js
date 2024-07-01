@@ -48,6 +48,12 @@ export const ListProvider = ({children}) => {
 
     const saveList = (list) => {
         // TODO firebase
+        let newLists = [{
+            id: list,
+            title: list,
+            items: []
+        }, ...lists];
+        setLists(newLists);
     }
 
     const updateList = (list) => {
@@ -63,7 +69,8 @@ export const ListProvider = ({children}) => {
     return (
         <ListContext.Provider value={{
             lists,
-            removeList
+            removeList,
+            saveList
         }}>
             {children}
         </ListContext.Provider>

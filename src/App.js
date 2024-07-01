@@ -9,7 +9,8 @@ import { ListProvider } from './ListContext.js';
 import { Typography, Stack } from '@mui/material';
 import { AuthProvider } from './AuthContext.js';
 import Logout from "./Logout";
-import List from "./Lists.js";
+import Lists from "./Lists.js";
+import DisplaySingleList from './DisplaySingleList.js';
 
 export default function App() {
 
@@ -31,7 +32,8 @@ export default function App() {
                   <Route exact path="/" element={<Login />} />
                   <Route path="/Meals" element={<Meals />} />
                   <Route path="/Login" element={<Login />} />
-                  <Route path="/Lists" element={<List />} />
+                  <Route path="/Lists" element={<Lists />} />
+                  <Route path="/Lists/:id" element={<DisplaySingleList />} />
                 </Routes>
               </BrowserRouter>
             </ListProvider>
