@@ -9,6 +9,7 @@ import { useMealContext } from './MealContext';
 import { useAuthContext } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Navigation from './Navigation.js';
 
 function Meals() {
 
@@ -27,6 +28,7 @@ function Meals() {
 
     return (
         <Container maxWidth="xl">
+            <Navigation />
             <MealForm />
             <MealList meals={meals} />
         </Container>

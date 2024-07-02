@@ -3,6 +3,7 @@ import React from 'react';
 import { useListContext } from './ListContext';
 import List from "./List.js";
 import ListForm from './ListForm.js';
+import Navigation from './Navigation.js';
 
 export default function Lists() {
 
@@ -10,6 +11,7 @@ export default function Lists() {
 
     return (
         <Container maxWidth="xl">
+            <Navigation />
             <ListForm />
             <Grid container spacing={2} alignItems="stretch" mt={5}>
                 {lists.map((list, i) => {
