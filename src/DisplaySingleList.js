@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import List from './List';
 import React, { useState, useEffect } from 'react';
 import { Container } from '@mui/material';
+import Navigation from './Navigation.js';
 
 export default function DisplaySingleList() {
     const { id } = useParams();
@@ -16,6 +17,7 @@ export default function DisplaySingleList() {
 
     return (
         <Container maxWidth="md">
+            <Navigation />
             {list?.id && <List {...list} />}
         </Container>
     )
