@@ -7,7 +7,7 @@ import Navigation from './Navigation.js';
 
 export default function Lists() {
 
-    const {lists} = useListContext();
+    const { lists } = useListContext();
 
     return (
         <Container maxWidth="xl">
@@ -17,7 +17,7 @@ export default function Lists() {
                 {lists.map((list, i) => {
                     return (
                         <Grid key={i} item xs={4}>
-                            <List key={list.id + "-" + i} id={list.id} title={list.title} items={list.items} slug={list.id} />
+                            <List key={list.id + "-" + i} id={list.id} title={list.title} items={list.items} docId={list.docId} slug={list.docId} />
                         </Grid>
                     )
                 })}

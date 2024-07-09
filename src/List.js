@@ -18,7 +18,7 @@ export default function List(props) {
     const [uncompletedItems, setUncompletedItems] = useState([]);
     const [completedItems, setCompletedItems] = useState([]);
 
-    const { removeList } = useListContext();
+    const { removeList, updateList } = useListContext();
 
     useEffect(() => {
       setUncompletedItems(listItems.filter(item => !item.complete));
@@ -44,6 +44,17 @@ export default function List(props) {
     }
 
     const updateListItems = (value) => {
+      updateList({
+        id: props.id,
+        title: props.title,
+        items: [...listItems, {
+          id: formatKey(value),
+          title: value,
+          completed: false
+        }],
+        docId: props.docId,
+        slug: props.slug
+      })
       const newListItems = [...listItems, {id: formatKey(value), title: value, completed: false}];
       setListItems(newListItems);
     }
@@ -52,6 +63,13 @@ export default function List(props) {
       console.log(e.target.parentElement.id);
       const listItem = e.target.parentElement.id;
       let updatedListItems = listItems.filter(item => item.id !== listItem);
+      updateList({
+        id: props.id,
+        title: props.title,
+        items: updatedListItems,
+        docId: props.docId,
+        slug: props.slug
+      })
       setListItems(updatedListItems);
     }
 
@@ -63,6 +81,13 @@ export default function List(props) {
           complete: item.id === e.target.parentElement.getAttribute("data-listitem") ? !item.complete : item.complete
         }
       })
+      updateList({
+        id: props.id,
+        title: props.title,
+        items: updatedListItems,
+        docId: props.docId,
+        slug: props.slug
+      }) 
       setListItems(updatedListItems);
     }
 

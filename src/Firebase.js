@@ -107,6 +107,43 @@ export const getCategories = async () => {
   return categories;
 }
 
+export const getLists = async () => {
+  const q = query(collection(db, 'lists'), where('id', '!=', 'undefined'));
+  let snapshot = await getDocs(q);
+  const lists = [];
+  console.log("getLists");
+  snapshot.forEach((doc) => {
+    let data = doc.data();
+    lists.push({
+        title: data.title,
+        id: data.id,
+        docId: doc.id,
+        items: data.items
+    });
+  })
+  return lists;
+}
+
+export const createList = async (listTitle) => {
+  const listColRef = collection(db, 'lists');
+  await addDoc(listColRef, {
+    title: listTitle,
+    id: listTitle,
+    createdOn: new Date(),
+    items:[]
+  });
+}
+
+export const updateListDoc = async (list) => {
+  const listRef = doc(db, 'lists', list.docId);
+  await updateDoc(listRef, {...list});
+} 
+
+export const deleteList = async (list) => {
+  console.log("delete list");
+  await deleteDoc(doc(db, 'lists', list.docId))
+}
+
 export const login = (email, password) => {
   if(!auth.currentUser) {
     signInWithEmailAndPassword(auth, email, password)

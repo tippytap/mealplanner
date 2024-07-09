@@ -22,8 +22,6 @@ export default function ListForm(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (e.target[0].value) {
-            // saveCategory(category);
-            // saveMeal(e.target[0].value, category);
             saveList(e.target[0].value);
             handleClose();
         }

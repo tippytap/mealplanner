@@ -1,4 +1,5 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
+import { getLists, createList, deleteList, updateListDoc } from './Firebase';
 
 const ListContext = createContext();
 
@@ -11,66 +12,35 @@ export const ListProvider = ({children}) => {
     const [lists, setLists] = useState([]);
 
     useEffect(() => {
-        setLists([
-            {
-                title: "Test list",
-                id: "test-list",
-                items: [
-                    {
-                        id: "stub",
-                        title: "Stub",
-                        complete: false
-                    },
-                    {
-                        id: "stub2",
-                        title: "Stub2",
-                        complete: true
-                    }
-                ]
-            },
-            {
-                title: "Test list 2",
-                id: "test-list-2",
-                items: [
-                    {
-                        id: "stub",
-                        title: "Stub",
-                        complete: false
-                    },
-                ]
-            }
-        ])
+        fetchLists();
     }, [])
 
     const fetchLists = async () => {
-        // TODO firebase
+        let listData = await getLists();
+        setLists(listData);
     }
 
     const saveList = (list) => {
-        // TODO firebase
-        let newLists = [{
-            id: list,
-            title: list,
-            items: []
-        }, ...lists];
-        setLists(newLists);
+        createList(list);
+        fetchLists();
     }
 
-    const updateList = (list) => {
-        // TODO firebase
+    const updateList = async (list) => {
+        await updateListDoc(list);
+        await fetchLists();
     }
 
     const removeList = (list) => {
-        // TODO firebase
-        const updatedLists = lists.filter((l) => l.id !== list.id);
-        setLists(updatedLists);
+        deleteList(list);
+        fetchLists();
     }
 
     return (
         <ListContext.Provider value={{
             lists,
             removeList,
-            saveList
+            saveList,
+            updateList
         }}>
             {children}
         </ListContext.Provider>
