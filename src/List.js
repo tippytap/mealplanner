@@ -120,7 +120,7 @@ export default function List(props) {
                 <Typography mb={1}>{completedItems.length > 0 && `${completedItems.length} completed item${completedItems.length > 1 ? "s" : ""}`}</Typography>
                 {completedItems.map((item, i) => {
                   return (
-                        <ListItem title={item.title} id={item.id} key={item.id + "-complete-" + i} complete={item.complete} delete={handleDeleteListItem} oncheck={handleCheck} />
+                    <ListItem title={item.title} id={item.id} key={item.id + "-complete-" + i} complete={item.complete} delete={handleDeleteListItem} oncheck={handleCheck} />
                   )
                 })}
               </Stack>

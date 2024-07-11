@@ -5,10 +5,17 @@ import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, Card
 import {styles} from './Styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { useListContext } from './ListContext';
+import { createFilterOptions } from '@mui/material';
 
 export default function ListForm(props) {
 
-    const { saveList, removeList } = useListContext();
+  const { saveList, saveListWithItems, lists, updateList } = useListContext();
+
+  const [listName, setListName] = useState();
+
+  const filter = createFilterOptions();
+  const [value, setValue] = useState(null);
+  const [list, setList] = useState("");
 
     useEffect(() => {
     }, [])
@@ -19,23 +26,105 @@ export default function ListForm(props) {
         setOpen(false);
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (e.target[0].value) {
-            saveList(e.target[0].value);
-            handleClose();
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      console.log("handleSubmit");
+      console.log(listName);
+      if (props.listItems) {
+        let listItems = props.listItems.map(item => {
+          return {
+            id: item.name,
+            title: item.desc,
+            complete: false
+          }
+        })
+        if (lists.filter(l => l.title === listName).length > 0) {
+          let listToUpdate = lists.filter(l => l.title === listName)[0];
+          listToUpdate.items = [...listToUpdate.items, ...listItems];
+          await updateList(listToUpdate);
+          handleClose();
+          return;
         }
+        await saveListWithItems(listName, listItems);
+      }
+      else {
+        await saveList(listName);
+      }
+      handleClose();
     }
 
     const handleOnChange = (e) => {
+      setListName(e.target.value);
+    }
+
+    const renderAutoComplete = () => {
+      return ( 
+      <>
+      <Typography>Add to existing list</Typography>
+      <Autocomplete 
+          options={lists}
+          selectOnFocus
+          clearOnBlur
+          handleHomeEndKeys
+          freeSolo
+          getOptionLabel={(option) => {
+              // Value selected with enter, right from the input
+              if (typeof option === 'string') {
+                return option;
+              }
+              // Add "xxx" option created dynamically
+              if (option.inputValue) {
+                return option.inputValue;
+              }
+              // Regular option
+              return option.title;
+            }}
+            filterOptions={(options, params) => {
+              const filtered = filter(options, params);
+      
+              const { inputValue } = params;
+              // Suggest the creation of a new value
+              const isExisting = options.some((option) => inputValue === option.title);
+              if (inputValue !== '' && !isExisting) {
+                filtered.push({
+                  inputValue,
+                  title: `Add "${inputValue}"`,
+                });
+              }
+      
+              return filtered;
+            }}
+            onChange={(event, newValue) => {
+              if (typeof newValue === 'string') {
+                setValue({
+                  title: newValue,
+                });
+                setList(newValue.inputValue);
+              } else if (newValue && newValue.inputValue) {
+                // Create a new value from the user input
+                setValue({
+                  title: newValue.inputValue,
+                });
+                setList(newValue.inputValue);
+              } else {
+                setValue(newValue);
+              }
+              setListName(newValue.title);
+            }}
+
+          renderOption={(props, option) => <li {...props}>{option.title}</li>}
+          renderInput={(params) => <TextField {...params} label="list" />}
+      />
+    </>
+  )
     }
 
     return (
         <Box>
-            <Button variant="contained" onClick={handleOpen}>
+            <Button sx={{width: "100%", margin: "1em 0 0"}} variant="contained" onClick={handleOpen}>
                 <Stack direction="row" spacing={2}>
                     <AddCircleOutlineIcon />
-                    <Typography>Create a new list</Typography>
+                    <Typography>{props.buttonText || "Create a new list"}</Typography>
                 </Stack>
             </Button>
             <Modal
@@ -59,9 +148,11 @@ export default function ListForm(props) {
                     <Typography variant={"h5"} mb={2}>Create a new list</Typography>
                     <form onSubmit={handleSubmit}>
                         <Stack direction="column" spacing={2}>
-                            <TextField variant="filled" id="create_new_meal_text" label="List Title" />
+                            <TextField variant="filled" id="create_new_meal_text" label="List Title" onChange={handleOnChange} />
                             <FormControl fullWidth>
                             </FormControl>
+                            {props.addToList && <Divider />}
+                            {props.addToList && renderAutoComplete()}
                             <Button type="submit" variant="contained">Add list</Button>
                         </Stack>
                     </form>

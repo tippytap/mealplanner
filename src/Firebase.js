@@ -124,13 +124,13 @@ export const getLists = async () => {
   return lists;
 }
 
-export const createList = async (listTitle) => {
+export const createList = async (listTitle, listItems = []) => {
   const listColRef = collection(db, 'lists');
   await addDoc(listColRef, {
     title: listTitle,
     id: listTitle,
     createdOn: new Date(),
-    items:[]
+    items: listItems 
   });
 }
 

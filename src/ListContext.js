@@ -20,12 +20,19 @@ export const ListProvider = ({children}) => {
         setLists(listData);
     }
 
-    const saveList = (list) => {
-        createList(list);
-        fetchLists();
+    const saveList = async (list) => {
+        await createList(list);
+        await fetchLists();
+    }
+
+    const saveListWithItems = async (list, listItems) => {
+        await createList(list, listItems);
+        await fetchLists();
     }
 
     const updateList = async (list) => {
+        console.log("updateList");
+        console.log(list);
         await updateListDoc(list);
         await fetchLists();
     }
@@ -40,7 +47,8 @@ export const ListProvider = ({children}) => {
             lists,
             removeList,
             saveList,
-            updateList
+            updateList,
+            saveListWithItems
         }}>
             {children}
         </ListContext.Provider>
