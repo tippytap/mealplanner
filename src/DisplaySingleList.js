@@ -13,7 +13,7 @@ export default function DisplaySingleList() {
     const [list, setList] = useState({});
 
     useEffect(() => {
-        setList(lists.filter(list => list.docId === id)[0]);
+        setList(lists.filter(list => list.id === id)[0]);
     }, [lists]);
 
     return (
@@ -23,7 +23,7 @@ export default function DisplaySingleList() {
                 <Link underline="hover" color="inherit" to="/Lists">Lists</Link>
                 <Typography color="text.primary">{list?.title}</Typography>
             </Breadcrumbs>
-            {list?.docId && <List {...list} slug={list.docId} />}
+            {list?.id && <List {...list} slug={list.id} />}
         </Container>
     )
 }

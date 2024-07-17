@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import {styles} from './Styles';
 import { useListContext } from './ListContext';
 import { Link } from 'react-router-dom';
+import { uid } from './constants/uid';
 
 
 export default function List(props) {
@@ -44,23 +45,18 @@ export default function List(props) {
     }
 
     const updateListItems = (value) => {
+      const newListItems = [...listItems, {id: uid.rnd(), title: value, completed: false}];
       updateList({
         id: props.id,
         title: props.title,
-        items: [...listItems, {
-          id: formatKey(value),
-          title: value,
-          completed: false
-        }],
+        items: newListItems,
         docId: props.docId,
         slug: props.slug
       })
-      const newListItems = [...listItems, {id: formatKey(value), title: value, completed: false}];
       setListItems(newListItems);
     }
 
     const handleDeleteListItem = (e) => {
-      console.log(e.target.parentElement.id);
       const listItem = e.target.parentElement.id;
       let updatedListItems = listItems.filter(item => item.id !== listItem);
       updateList({

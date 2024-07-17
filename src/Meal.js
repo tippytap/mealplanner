@@ -2,13 +2,12 @@ import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, Card
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { ListAlt } from '@mui/icons-material';
 import React, { useState, useEffect } from 'react';
 import { useMealContext } from './MealContext';
 import Modal from '@mui/material/Modal';
 import {styles} from './Styles';
-import { useListContext } from './ListContext';
 import ListForm from './ListForm';
+import { uid } from './constants/uid';
 
 export default function Meal(props) {
 
@@ -19,8 +18,6 @@ export default function Meal(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const { saveList, lists } = useListContext();
 
   useEffect(() => {
     updateMeal({
@@ -51,17 +48,13 @@ export default function Meal(props) {
   }
 
   const updateList = (value) => {
-    const newIngredients = [...ingredients, {name: formatKey(value), desc: value}];
+    const newIngredients = [...ingredients, {name: formatKey(value), desc: value, id: uid.rnd()}];
     setIngredients(newIngredients);
   }
 
   const handleDelete = () => {
     removeMeal(props);
   }
-
-  // const handleSaveNewList = (e) => {
-  //   console.log(e.currentTarget);
-  // }
 
   return (
     <Card variant="outlined" sx={{position: "relative", paddingTop: "1em", height: "100%"}}>
@@ -142,28 +135,3 @@ const Ingredient = (props) => {
     </Stack>
   )
 }
-
-// const ExportToListForm = (props) => {
-//   return (
-//     <Box>
-//       <Button variant="contained" sx={{marginTop: "1em", width: "100%"}} onClick={handleSaveNewList}>
-//         <Typography sx={{paddingRight: "1em"}}>
-//           Export to new list
-//         </Typography>
-//         <ListAlt />
-//       </Button>
-//       <Modal
-//           open={open}
-//           onClose={handleClose}
-//       >
-//         <Box sx={styles.modal}>
-//           <Typography mb={2}></Typography>
-//           <Stack direction="row" justifyContent="space-between">
-//             <Button variant="outlined" onClick={handleClose}>Cancel</Button>
-//             <Button variant="contained" color="error" onClick={handleDelete}>Delete</Button>
-//           </Stack>
-//         </Box>
-//       </Modal>
-//     </Box>
-//   )
-// }

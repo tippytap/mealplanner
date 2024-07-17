@@ -12,12 +12,14 @@ export default function Lists() {
     return (
         <Container maxWidth="xl">
             <Navigation />
-            <ListForm />
+            <Container sx={{width: "40%"}}>
+                <ListForm />
+            </Container>
             <Grid container spacing={2} alignItems="stretch" mt={5}>
                 {lists.map((list, i) => {
                     return (
                         <Grid key={i} item xs={4}>
-                            <List key={list.id + "-" + i} id={list.id} title={list.title} items={list.items} docId={list.docId} slug={list.docId} />
+                            <List key={list.id} id={list.id} title={list.title} items={list.items} docId={list.docId} slug={list.id} />
                         </Grid>
                     )
                 })}

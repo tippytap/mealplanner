@@ -31,8 +31,6 @@ export const ListProvider = ({children}) => {
     }
 
     const updateList = async (list) => {
-        console.log("updateList");
-        console.log(list);
         await updateListDoc(list);
         await fetchLists();
     }

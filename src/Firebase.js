@@ -25,6 +25,8 @@ import {
   signOut
 } from 'firebase/auth';
 
+import { uid } from './constants/uid';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -49,7 +51,8 @@ export const createMeal = async (mealName, category) => {
     name: mealName,
     ingredients: [],
     createdOn: new Date(),
-    category: category
+    category: category,
+    id: uid.rnd()
   });
 }
 
@@ -83,7 +86,8 @@ export const getMeals = async () => {
       ingredients: doc.data().ingredients,
       docId: doc.id,
       createdOn: new Date(doc.data().createdOn * 1000),
-      category: doc.data().category
+      category: doc.data().category,
+      id: doc.data().id
     })
   })
   return meals;
@@ -126,11 +130,13 @@ export const getLists = async () => {
 
 export const createList = async (listTitle, listItems = []) => {
   const listColRef = collection(db, 'lists');
+  let id = uid.rnd();
   await addDoc(listColRef, {
     title: listTitle,
-    id: listTitle,
+    id: id,
     createdOn: new Date(),
-    items: listItems 
+    items: listItems,
+    slug: id
   });
 }
 

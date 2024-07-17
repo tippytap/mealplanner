@@ -6,6 +6,7 @@ import {styles} from './Styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { useListContext } from './ListContext';
 import { createFilterOptions } from '@mui/material';
+import { uid } from './constants/uid';
 
 export default function ListForm(props) {
 
@@ -28,16 +29,15 @@ export default function ListForm(props) {
 
     const handleSubmit = async (e) => {
       e.preventDefault();
-      console.log("handleSubmit");
-      console.log(listName);
       if (props.listItems) {
         let listItems = props.listItems.map(item => {
           return {
-            id: item.name,
+            id: uid.rnd(),
             title: item.desc,
             complete: false
           }
         })
+        console.log(listItems);
         if (lists.filter(l => l.title === listName).length > 0) {
           let listToUpdate = lists.filter(l => l.title === listName)[0];
           listToUpdate.items = [...listToUpdate.items, ...listItems];
