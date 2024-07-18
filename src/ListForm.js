@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useListContext } from './ListContext';
 import { createFilterOptions } from '@mui/material';
 import { uid } from './constants/uid';
+import { useSnackbarContext } from './SnackbarContext';
 
 export default function ListForm(props) {
 
@@ -17,6 +18,8 @@ export default function ListForm(props) {
   const filter = createFilterOptions();
   const [value, setValue] = useState(null);
   const [list, setList] = useState("");
+
+  const {showMessage} = useSnackbarContext();
 
     useEffect(() => {
     }, [])
@@ -37,11 +40,10 @@ export default function ListForm(props) {
             complete: false
           }
         })
-        console.log(listItems);
         if (lists.filter(l => l.title === listName).length > 0) {
           let listToUpdate = lists.filter(l => l.title === listName)[0];
           listToUpdate.items = [...listToUpdate.items, ...listItems];
-          await updateList(listToUpdate);
+          await updateList(listToUpdate).then(() => showMessage(`Added to ${listToUpdate.title}`));
           handleClose();
           return;
         }

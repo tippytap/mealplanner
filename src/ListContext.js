@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
 import { getLists, createList, deleteList, updateListDoc } from './Firebase';
+import { useSnackbarContext } from "./SnackbarContext";
 
 const ListContext = createContext();
 
@@ -10,6 +11,7 @@ export const useListContext = () => {
 export const ListProvider = ({children}) => {
 
     const [lists, setLists] = useState([]);
+    const {showMessage} = useSnackbarContext();
 
     useEffect(() => {
         fetchLists();
@@ -21,12 +23,16 @@ export const ListProvider = ({children}) => {
     }
 
     const saveList = async (list) => {
-        await createList(list);
+        await createList(list)
+            .then(() => showMessage("List created successfully"))
+            .catch(e => showMessage("Unable to create list", "danger"));
         await fetchLists();
     }
 
     const saveListWithItems = async (list, listItems) => {
-        await createList(list, listItems);
+        await createList(list, listItems)
+            .then(() => showMessage("List created successfully"))
+            .catch(e => showMessage("Unable to create list", "danger"));
         await fetchLists();
     }
 
@@ -36,7 +42,9 @@ export const ListProvider = ({children}) => {
     }
 
     const removeList = (list) => {
-        deleteList(list);
+        deleteList(list)
+            .then(() => showMessage("List deleted successfully"))
+            .catch(e => showMessage("Unable to delete list", "danger"));
         fetchLists();
     }
 

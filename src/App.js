@@ -12,6 +12,7 @@ import Logout from "./Logout";
 import Lists from "./Lists.js";
 import DisplaySingleList from './DisplaySingleList.js';
 import Navigation from './Navigation.js';
+import { SnackbarProvider } from './SnackbarContext.js';
 
 export default function App() {
   return (
@@ -23,19 +24,21 @@ export default function App() {
           </Stack>
         </header>
         <main style={{marginBottom: "5rem"}}>
-          <MealProvider>
-            <ListProvider>
-              <BrowserRouter>
-                <Routes>
-                  <Route exact path="/" element={<Login />} />
-                  <Route path="/Meals" element={<Meals />} />
-                  <Route path="/Login" element={<Login />} />
-                  <Route path="/Lists" element={<Lists />} />
-                  <Route path="/Lists/:id" element={<DisplaySingleList />} />
-                </Routes>
-              </BrowserRouter>
-            </ListProvider>
-          </MealProvider>
+          <SnackbarProvider>
+            <MealProvider>
+              <ListProvider>
+                <BrowserRouter>
+                  <Routes>
+                    <Route exact path="/" element={<Login />} />
+                    <Route path="/Meals" element={<Meals />} />
+                    <Route path="/Login" element={<Login />} />
+                    <Route path="/Lists" element={<Lists />} />
+                    <Route path="/Lists/:id" element={<DisplaySingleList />} />
+                  </Routes>
+                </BrowserRouter>
+              </ListProvider>
+            </MealProvider>
+          </SnackbarProvider>
         </main>
       </div>
     </AuthProvider>

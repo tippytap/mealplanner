@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal';
 import {styles} from './Styles';
 import ListForm from './ListForm';
 import { uid } from './constants/uid';
+import { useSnackbarContext } from './SnackbarContext';
 
 export default function Meal(props) {
 
@@ -18,6 +19,8 @@ export default function Meal(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const {showMessage} = useSnackbarContext();
 
   useEffect(() => {
     updateMeal({

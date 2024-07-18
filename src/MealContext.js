@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
 import { createMeal, getMeals, deleteMeal, updateMealDoc, getCategories, getCategory, createCategory } from './Firebase';
+import { useSnackbarContext } from "./SnackbarContext";
 
 const MealContext = createContext();
 
@@ -13,6 +14,8 @@ export const MealProvider = ({children}) => {
     const [filter, setFilter] = useState("all");
     const [allMeals, setAllMeals] = useState([]);
     const [categories, setCategories] = useState([]);
+
+    const {showMessage} = useSnackbarContext();
 
     useEffect(() => {
         fetchMeals();
@@ -52,19 +55,22 @@ export const MealProvider = ({children}) => {
         if (meal && category && !meals.find((m) => m.name === meal)) {
             createMeal(meal, category).then(() => {
                 fetchMeals();
-            });
+            }).catch(e => showMessage(e, "danger"));
         }
     }
 
     const updateMeal = (meal) => {
-        updateMealDoc(meal);
+        updateMealDoc(meal)
+            .catch(e => showMessage("Unable to update meal", "danger"));
     }
 
     const removeMeal = (meal) => {
         const newMeals = meals.filter((m) => m.docId !== meal.docId);
         setMeals(newMeals);
         setAllMeals(newMeals);
-        deleteMeal(meal);
+        deleteMeal(meal)
+            .then(() => showMessage("Meal deleted successfully"))
+            .catch(e => showMessage("Unable to delete this meal", "danger"));
     }
 
     const fetchCategories = async () => {
