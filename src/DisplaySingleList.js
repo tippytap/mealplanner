@@ -23,7 +23,7 @@ export default function DisplaySingleList() {
                 <Link underline="hover" color="inherit" to="/Lists">Lists</Link>
                 <Typography color="text.primary">{list?.title}</Typography>
             </Breadcrumbs>
-            {list?.id && <List {...list} slug={list.id} redirect={true} />}
+            {list?.id && <List {...list} slug={list.id} redirect={true} singleList={true} />}
         </Container>
     )
 }

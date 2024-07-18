@@ -97,9 +97,9 @@ export default function List(props) {
     return (
         <Card variant="outlined" sx={{position: "relative", paddingTop: "1em", height: "100%"}}>
         <Stack justifyContent={"space-between"} sx={{height: "100%"}}>
-          {props.slug && <Link to={`/Lists/${props.slug}`}><CardHeader mt="1" title={props.title} /></Link>}
-          {!props.slug && <CardHeader mt="1" title={props.title} />}
-          <CardContent sx={{height: "100%"}}>
+          {(!props.singleList && props.slug) && <Link to={`/Lists/${props.slug}`}><CardHeader mt="1" title={props.title} /></Link>}
+          {props.singleList && <CardHeader mt="1" title={props.title} />}
+          <CardContent sx={props.singleList ? {height: "100%"} : {height: "25vh", overflow: "scroll"}}>
             <Stack spacing={2}>
               <Button
                 variant="text"
