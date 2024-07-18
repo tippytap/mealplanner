@@ -81,7 +81,6 @@ export default function Meal(props) {
                 return <Ingredient key={i} name={item.name} desc={item.desc} delete={handleDeleteIngredient} /> 
               })}
             </Stack>
-
           </Stack>
         </CardContent>
         <CardActions sx={{width: "100%"}}>

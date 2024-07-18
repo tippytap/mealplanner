@@ -8,6 +8,7 @@ import {styles} from './Styles';
 import { useListContext } from './ListContext';
 import { Link } from 'react-router-dom';
 import { uid } from './constants/uid';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function List(props) {
@@ -21,13 +22,19 @@ export default function List(props) {
 
     const { removeList, updateList } = useListContext();
 
+    const navigate = useNavigate();
+
     useEffect(() => {
       setUncompletedItems(listItems.filter(item => !item.complete));
       setCompletedItems(listItems.filter(item => item.complete));
     }, [listItems]);
 
     const handleDelete = () => {
-        removeList(props);
+        removeList(props).then(() => {
+          if (props.redirect) {
+            navigate("/lists");
+          }
+        });
     }
 
     const handleSubmitListItem = (e) => {

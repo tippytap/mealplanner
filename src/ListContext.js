@@ -41,8 +41,8 @@ export const ListProvider = ({children}) => {
         await fetchLists();
     }
 
-    const removeList = (list) => {
-        deleteList(list)
+    const removeList = async (list) => {
+        await deleteList(list)
             .then(() => showMessage("List deleted successfully"))
             .catch(e => showMessage("Unable to delete list", "danger"));
         fetchLists();
