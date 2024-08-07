@@ -19,7 +19,7 @@ export default function Lists() {
                 {lists.map((list, i) => {
                     return (
                         <Grid key={i} item xs={4}>
-                            <List key={list.id} id={list.id} title={list.title} items={list.items} docId={list.docId} slug={list.id} />
+                            <List key={list.id} {...list} slug={list.id} />
                         </Grid>
                     )
                 })}

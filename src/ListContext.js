@@ -19,7 +19,7 @@ export const ListProvider = ({children}) => {
 
     const fetchLists = async () => {
         let listData = await getLists();
-        setLists(listData);
+        setLists(listData.sort((a, b) => b.createdOn - a.createdOn));
     }
 
     const saveList = async (list) => {

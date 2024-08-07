@@ -115,14 +115,14 @@ export const getLists = async () => {
   const q = query(collection(db, 'lists'), where('id', '!=', 'undefined'));
   let snapshot = await getDocs(q);
   const lists = [];
-  console.log("getLists");
   snapshot.forEach((doc) => {
     let data = doc.data();
     lists.push({
         title: data.title,
         id: data.id,
         docId: doc.id,
-        items: data.items
+        items: data.items,
+        createdOn: data.createdOn
     });
   })
   return lists;
