@@ -1,6 +1,7 @@
-import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, CardActions, Divider } from '@mui/material';
+import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, CardActions, Divider, Menu, MenuItem } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
+import { MoreVert } from '@mui/icons-material';
 import RemoveIcon from '@mui/icons-material/Remove';
 import React, { useState, useEffect } from 'react';
 import { useMealContext } from './MealContext';
@@ -17,10 +18,14 @@ export default function Meal(props) {
   const [ingredients, setIngredients] = useState(props.ingredients || []);
 
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const {showMessage} = useSnackbarContext();
+
+  const hasAnchorEl = Boolean(anchorEl);
 
   useEffect(() => {
     updateMeal({
@@ -29,6 +34,13 @@ export default function Meal(props) {
       ingredients: ingredients
     });
   }, [ingredients])
+
+  const handleMenuClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  }
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  }
 
   const handleDeleteIngredient = (e) => {
     const ingredient = e.target.parentElement.name;
@@ -59,6 +71,9 @@ export default function Meal(props) {
     removeMeal(props);
   }
 
+  const menuButtonId = props.id + "-menu-button";
+  const menuId = props.id + "-menu";
+
   return (
     <Card variant="outlined" sx={{position: "relative", paddingTop: "1em", height: "100%"}}>
       <Stack justifyContent={"space-between"} sx={{height: "100%"}}>
@@ -67,15 +82,33 @@ export default function Meal(props) {
           <Stack spacing={2}>
             <Button
               variant="text"
-              color="error"
-              id={props.id} 
-              onClick={handleOpen}
-              sx={{position: "absolute", top: "0", right: "0"}}
+              // color="error"
+              id={menuButtonId} 
+              aria-controls={hasAnchorEl ? menuId : undefined}
+              aria-haspopup="true"
+              aria-expanded={hasAnchorEl ? "true" : undefined}
+              // onClick={handleOpen}
+              onClick={handleMenuClick}
+              sx={{position: "absolute", top: "5px", right: "5px", minWidth: "40px", borderRadius: "50px"}}
             >
                 <span className='visually-hidden'>Delete meal</span>
                 <span style={{position: "absolute", top: 0, left: 0, right: 0, bottom: 0}}>&nbsp;</span>
-                <CloseIcon role="presentation" tabIndex={-1} />
+                {/* <CloseIcon role="presentation" tabIndex={-1} /> */}
+                <MoreVert role="presentation" tabIndex={-1} />
             </Button>
+            <Menu
+              id={menuId}
+              anchorEl={anchorEl}
+              open={hasAnchorEl}
+              onClose={handleMenuClose}
+              MenuListProps={{
+                'aria-labelledby': menuButtonId,
+              }}
+            >
+              <MenuItem onClick={handleMenuClose}>Rename</MenuItem>
+              <MenuItem onClick={handleMenuClose}>Change category</MenuItem>
+              <MenuItem onClick={handleOpen}>Delete Meal</MenuItem>
+            </Menu>
             <Stack sx={{marginBottom: "1em"}} divider={<Divider />}>
               {ingredients.map((item, i) => { 
                 return <Ingredient key={i} name={item.name} desc={item.desc} delete={handleDeleteIngredient} /> 
