@@ -8,11 +8,6 @@ export default function MealList(props) {
 
     const { filter, updateFilter } = useMealContext();
 
-    const formatName = (name, i) => {
-        let formattedName = name + "-" + i
-        return formattedName.replaceAll(" ", "-");
-    }
-
     const handleRemoveClick = (e) => {
         updateFilter("all");
     }
@@ -36,10 +31,11 @@ export default function MealList(props) {
                         <Grid key={i} item xs={4}>
                             <Meal 
                                 key={meal.docId}
-                                id={formatName(meal.name, i)}
+                                id={meal.id}
                                 docId={meal.docId}
                                 listName={meal.name} 
                                 ingredients={meal.ingredients}
+                                category={meal.category}
                             />
                         </Grid>
                     )

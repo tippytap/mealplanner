@@ -10,6 +10,7 @@ import {styles} from './Styles';
 import ListForm from './ListForm';
 import { uid } from './constants/uid';
 import { useSnackbarContext } from './SnackbarContext';
+import MealFormControl from './MealFormControl';
 
 export default function Meal(props) {
 
@@ -18,10 +19,14 @@ export default function Meal(props) {
   const [ingredients, setIngredients] = useState(props.ingredients || []);
 
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleEditOpen = () => setEditOpen(true);
+  const handleEditClose = () => setEditOpen(false);
 
   const {showMessage} = useSnackbarContext();
 
@@ -82,18 +87,15 @@ export default function Meal(props) {
           <Stack spacing={2}>
             <Button
               variant="text"
-              // color="error"
               id={menuButtonId} 
               aria-controls={hasAnchorEl ? menuId : undefined}
               aria-haspopup="true"
               aria-expanded={hasAnchorEl ? "true" : undefined}
-              // onClick={handleOpen}
               onClick={handleMenuClick}
               sx={{position: "absolute", top: "5px", right: "5px", minWidth: "40px", borderRadius: "50px"}}
             >
                 <span className='visually-hidden'>Delete meal</span>
                 <span style={{position: "absolute", top: 0, left: 0, right: 0, bottom: 0}}>&nbsp;</span>
-                {/* <CloseIcon role="presentation" tabIndex={-1} /> */}
                 <MoreVert role="presentation" tabIndex={-1} />
             </Button>
             <Menu
@@ -105,8 +107,7 @@ export default function Meal(props) {
                 'aria-labelledby': menuButtonId,
               }}
             >
-              <MenuItem onClick={handleMenuClose}>Rename</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Change category</MenuItem>
+              <MenuItem onClick={handleEditOpen}>Edit meal</MenuItem>
               <MenuItem onClick={handleOpen}>Delete Meal</MenuItem>
             </Menu>
             <Stack sx={{marginBottom: "1em"}} divider={<Divider />}>
@@ -133,6 +134,21 @@ export default function Meal(props) {
                 <Button variant="outlined" onClick={handleClose}>Cancel</Button>
                 <Button variant="contained" color="error" onClick={handleDelete}>Delete</Button>
               </Stack>
+            </Box>
+          </Modal>
+          <Modal
+              open={editOpen}
+              onClose={handleEditClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+          >
+            <Box sx={styles.modal}>
+              <MealFormControl 
+                mealTitle={props.listName} 
+                submitText={"Update meal"} 
+                cancel={handleEditClose}
+                meal={props}
+              />
             </Box>
           </Modal>
         </CardActions>

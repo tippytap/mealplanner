@@ -51,16 +51,16 @@ export const MealProvider = ({children}) => {
         filterMeals(meals);
     }
 
-    const saveMeal = (meal, category) => {
+    const saveMeal = async (meal, category) => {
         if (meal && category && !meals.find((m) => m.name === meal)) {
-            createMeal(meal, category).then(() => {
+            await createMeal(meal, category).then(() => {
                 fetchMeals();
             }).catch(e => showMessage(e, "danger"));
         }
     }
 
-    const updateMeal = (meal) => {
-        updateMealDoc(meal)
+    const updateMeal = async (meal) => {
+        await updateMealDoc(meal)
             .catch(e => showMessage("Unable to update meal", "danger"));
     }
 
@@ -96,7 +96,8 @@ export const MealProvider = ({children}) => {
             filter,
             categories,
             saveCategory,
-            fetchCategories
+            fetchCategories,
+            fetchMeals
         }}>
             {children}
         </MealContext.Provider>

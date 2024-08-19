@@ -67,7 +67,8 @@ export const createCategory = async (categoryName) => {
 // Update a meal in the Firestore
 export const updateMealDoc = async (meal) => {
   const mealRef = doc(db, 'meals', meal.docId);
-  await updateDoc(mealRef, { ingredients: meal.ingredients });
+  // await updateDoc(mealRef, { ingredients: meal.ingredients });
+  await updateDoc(mealRef, { ...meal });
 } 
 
 // Asychronously delete a meal from Firestore
