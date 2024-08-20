@@ -3,7 +3,7 @@ import React from 'react';
 import { useListContext } from './ListContext';
 import List from "./List.js";
 import ListForm from './ListForm.js';
-import Navigation from './Navigation.js';
+import Navigation from '../utils/Navigation.js';
 
 export default function Lists() {
 

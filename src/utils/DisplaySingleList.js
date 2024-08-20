@@ -1,6 +1,6 @@
-import { useListContext } from './ListContext';
+import { useListContext } from '../list/ListContext.js';
 import { useParams } from 'react-router-dom';
-import List from './List';
+import List from '../list/List.js';
 import React, { useState, useEffect } from 'react';
 import { Container, Breadcrumbs, Typography } from '@mui/material';
 import Navigation from './Navigation.js';

@@ -1,18 +1,16 @@
 import './App.css';
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
-import Meals from "./Meals.js";
-import Login from "./Login.js";
-import { MealProvider } from './MealContext.js';
-import { ListProvider } from './ListContext.js';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Meals from "./meal/Meals.js";
+import Login from "./auth/Login.js";
+import { MealProvider } from './meal/MealContext.js';
+import { ListProvider } from './list/ListContext.js';
 import { Typography, Stack } from '@mui/material';
-import { AuthProvider } from './AuthContext.js';
-import Logout from "./Logout";
-import Lists from "./Lists.js";
-import DisplaySingleList from './DisplaySingleList.js';
-import Navigation from './Navigation.js';
-import { SnackbarProvider } from './SnackbarContext.js';
+import { AuthProvider } from './auth/AuthContext.js';
+import Lists from "./list/Lists.js";
+import DisplaySingleList from './utils/DisplaySingleList.js';
+import { SnackbarProvider } from './utils/SnackbarContext.js';
 
 export default function App() {
   return (

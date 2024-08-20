@@ -1,15 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { useMealContext } from './MealContext';
-import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, Divider, Select, MenuItem, InputLabel, FormControl, Autocomplete } from '@mui/material';
+import { Button, Stack, TextField, FormControl, Autocomplete } from '@mui/material';
 import { createFilterOptions } from '@mui/material';
-import { useSnackbarContext } from "./SnackbarContext";
-import { useNavigate } from 'react-router-dom';
+import { useSnackbarContext } from '../utils/SnackbarContext';
 
 export default function MealFormControl(props) {
 
     const {categories, saveMeal, updateMeal, fetchMeals} = useMealContext();
     const {showMessage} = useSnackbarContext();
-    const navigate = useNavigate();
 
     const [categorySelectData, setCategorySelectData] = useState([]);
     const filter = createFilterOptions();

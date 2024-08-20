@@ -4,7 +4,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { LunchDining, Checklist, Logout, MenuOpen, Close } from '@mui/icons-material';
 import { useState } from 'react';
-import { useAuthContext } from './AuthContext';
+import { useAuthContext } from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 

@@ -1,12 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Modal from '@mui/material/Modal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, Divider, Select, MenuItem, InputLabel, FormControl, Autocomplete } from '@mui/material';
-import { createFilterOptions } from '@mui/material';
-import {styles} from './Styles';
-import { useMealContext } from './MealContext';
-import CloseIcon from '@mui/icons-material/Close';
-import { categories } from './categories';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { styles } from '../Styles';
 import MealFormControl from './MealFormControl';
 
 export default function MealForm(props) {

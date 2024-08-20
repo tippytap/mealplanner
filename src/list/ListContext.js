@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
-import { getLists, createList, deleteList, updateListDoc } from './Firebase';
-import { useSnackbarContext } from "./SnackbarContext";
+import { getLists, createList, deleteList, updateListDoc } from '../firebase/Firebase';
+import { useSnackbarContext } from "../utils/SnackbarContext";
 
 const ListContext = createContext();
 

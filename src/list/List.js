@@ -4,10 +4,10 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import React, { useState, useEffect } from 'react';
 import Modal from '@mui/material/Modal';
-import {styles} from './Styles';
+import {styles} from '../Styles';
 import { useListContext } from './ListContext';
 import { Link } from 'react-router-dom';
-import { uid } from './constants/uid';
+import { uid } from '../constants/uid';
 import { useNavigate } from 'react-router-dom';
 
 

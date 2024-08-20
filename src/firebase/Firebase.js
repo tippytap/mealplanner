@@ -25,7 +25,7 @@ import {
   signOut
 } from 'firebase/auth';
 
-import { uid } from './constants/uid';
+import { uid } from '../constants/uid';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

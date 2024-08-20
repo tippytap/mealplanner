@@ -1,13 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import Modal from '@mui/material/Modal';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, Divider, Select, MenuItem, InputLabel, FormControl, Autocomplete } from '@mui/material';
-import {styles} from './Styles';
+import { Box, Button, Stack, Typography, TextField, Divider, FormControl, Autocomplete } from '@mui/material';
+import {styles} from '../Styles';
 import CloseIcon from '@mui/icons-material/Close';
 import { useListContext } from './ListContext';
 import { createFilterOptions } from '@mui/material';
-import { uid } from './constants/uid';
-import { useSnackbarContext } from './SnackbarContext';
+import { uid } from '../constants/uid';
+import { useSnackbarContext } from '../utils/SnackbarContext';
 
 export default function ListForm(props) {
 

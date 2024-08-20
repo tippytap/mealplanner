@@ -6,10 +6,10 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import React, { useState, useEffect } from 'react';
 import { useMealContext } from './MealContext';
 import Modal from '@mui/material/Modal';
-import {styles} from './Styles';
-import ListForm from './ListForm';
-import { uid } from './constants/uid';
-import { useSnackbarContext } from './SnackbarContext';
+import {styles} from '../Styles';
+import ListForm from '../list/ListForm';
+import { uid } from '../constants/uid';
+import { useSnackbarContext } from '../utils/SnackbarContext';
 import MealFormControl from './MealFormControl';
 
 export default function Meal(props) {

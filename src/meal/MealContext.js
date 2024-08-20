@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
-import { createMeal, getMeals, deleteMeal, updateMealDoc, getCategories, getCategory, createCategory } from './Firebase';
-import { useSnackbarContext } from "./SnackbarContext";
+import { createMeal, getMeals, deleteMeal, updateMealDoc, getCategories, getCategory, createCategory } from '../firebase/Firebase';
+import { useSnackbarContext } from "../utils/SnackbarContext";
 
 const MealContext = createContext();
 

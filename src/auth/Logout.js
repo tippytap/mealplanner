@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuthContext } from "./AuthContext";
+import { useAuthContext } from "./auth/AuthContext";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, Divider } from '@mui/material';
 
