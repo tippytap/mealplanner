@@ -25,6 +25,8 @@ import {
   signOut
 } from 'firebase/auth';
 
+import { uid } from '../constants/uid';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -49,14 +51,24 @@ export const createMeal = async (mealName, category) => {
     name: mealName,
     ingredients: [],
     createdOn: new Date(),
-    category: category
+    category: category,
+    id: uid.rnd()
+  });
+}
+
+export const createCategory = async (categoryName) => {
+  const categoryColRef = collection(db, 'categories');
+  await addDoc(categoryColRef, {
+    name: categoryName,
+    createdOn: new Date()
   });
 }
 
 // Update a meal in the Firestore
 export const updateMealDoc = async (meal) => {
   const mealRef = doc(db, 'meals', meal.docId);
-  await updateDoc(mealRef, { ingredients: meal.ingredients });
+  // await updateDoc(mealRef, { ingredients: meal.ingredients });
+  await updateDoc(mealRef, { ...meal });
 } 
 
 // Asychronously delete a meal from Firestore
@@ -75,10 +87,68 @@ export const getMeals = async () => {
       ingredients: doc.data().ingredients,
       docId: doc.id,
       createdOn: new Date(doc.data().createdOn * 1000),
-      category: doc.data().category
+      category: doc.data().category,
+      id: doc.data().id
     })
   })
   return meals;
+}
+
+/**
+ * Returns promise
+ */
+export const getCategory = (categoryName) => {
+  const q = query(collection(db, 'categories'), where('name', '==', categoryName));
+  return getDocs(q);
+}
+
+export const getCategories = async () => {
+  const q = query(collection(db, 'categories'), where('name', '!=', 'undefined'));
+  let snapshot = await getDocs(q);
+  const categories = [];
+  snapshot.forEach((doc) => {
+    categories.push(doc.data().name);
+  })
+  return categories;
+}
+
+export const getLists = async () => {
+  const q = query(collection(db, 'lists'), where('id', '!=', 'undefined'));
+  let snapshot = await getDocs(q);
+  const lists = [];
+  snapshot.forEach((doc) => {
+    let data = doc.data();
+    lists.push({
+        title: data.title,
+        id: data.id,
+        docId: doc.id,
+        items: data.items,
+        createdOn: data.createdOn
+    });
+  })
+  return lists;
+}
+
+export const createList = async (listTitle, listItems = []) => {
+  const listColRef = collection(db, 'lists');
+  let id = uid.rnd();
+  await addDoc(listColRef, {
+    title: listTitle,
+    id: id,
+    createdOn: new Date(),
+    items: listItems,
+    slug: id
+  });
+}
+
+export const updateListDoc = async (list) => {
+  const listRef = doc(db, 'lists', list.docId);
+  await updateDoc(listRef, {...list});
+} 
+
+export const deleteList = async (list) => {
+  console.log("delete list");
+  await deleteDoc(doc(db, 'lists', list.docId))
 }
 
 export const login = (email, password) => {

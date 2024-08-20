@@ -1,6 +1,6 @@
 import React, {createContext, useContext, useState, useEffect} from "react";
-import { createMeal, getMeals, deleteMeal, updateMealDoc } from './Firebase';
-import { categories } from "./categories";
+import { createMeal, getMeals, deleteMeal, updateMealDoc, getCategories, getCategory, createCategory } from '../firebase/Firebase';
+import { useSnackbarContext } from "../utils/SnackbarContext";
 
 const MealContext = createContext();
 
@@ -13,9 +13,13 @@ export const MealProvider = ({children}) => {
     const [meals, setMeals] = useState([]);
     const [filter, setFilter] = useState("all");
     const [allMeals, setAllMeals] = useState([]);
+    const [categories, setCategories] = useState([]);
+
+    const {showMessage} = useSnackbarContext();
 
     useEffect(() => {
         fetchMeals();
+        fetchCategories();
     }, [])
 
     useEffect(() => {
@@ -34,7 +38,7 @@ export const MealProvider = ({children}) => {
     }
 
     const filterMeals = () => {
-        if (filter !== categories().all) {
+        if (filter !== "all") {
             setMeals(allMeals.filter((meal) => meal.category === filter));
         }
         else {
@@ -47,23 +51,39 @@ export const MealProvider = ({children}) => {
         filterMeals(meals);
     }
 
-    const saveMeal = (meal, category) => {
+    const saveMeal = async (meal, category) => {
         if (meal && category && !meals.find((m) => m.name === meal)) {
-            createMeal(meal, category).then(() => {
+            await createMeal(meal, category).then(() => {
                 fetchMeals();
-            });
+            }).catch(e => showMessage(e, "danger"));
         }
     }
 
-    const updateMeal = (meal) => {
-        updateMealDoc(meal);
+    const updateMeal = async (meal) => {
+        await updateMealDoc(meal)
+            .catch(e => showMessage("Unable to update meal", "danger"));
     }
 
     const removeMeal = (meal) => {
         const newMeals = meals.filter((m) => m.docId !== meal.docId);
         setMeals(newMeals);
         setAllMeals(newMeals);
-        deleteMeal(meal);
+        deleteMeal(meal)
+            .then(() => showMessage("Meal deleted successfully"))
+            .catch(e => showMessage("Unable to delete this meal", "danger"));
+    }
+
+    const fetchCategories = async () => {
+        let categoryData = await getCategories();
+        setCategories(categoryData);
+    }
+
+    const saveCategory = (categoryName) => {
+        if (categoryName && !categories.find(c => c === categoryName)) {
+            createCategory(categoryName);
+            fetchCategories();
+            filterMeals();
+        }
     }
 
     return (
@@ -73,7 +93,11 @@ export const MealProvider = ({children}) => {
             updateMeal,
             removeMeal,
             updateFilter,
-            filter
+            filter,
+            categories,
+            saveCategory,
+            fetchCategories,
+            fetchMeals
         }}>
             {children}
         </MealContext.Provider>

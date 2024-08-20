@@ -1,14 +1,13 @@
 
-import React, { useContext, useEffect } from 'react';
-import MealList from './MealList';
-import { AuthContext } from './FirebaseAuthContext';
-import { createMeal, getMeals, deleteMeal, updateMealDoc } from './Firebase';
-import MealForm from './MealForm';
-import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, Container, Grid } from '@mui/material';
-import { useMealContext } from './MealContext';
-import { useAuthContext } from "./AuthContext";
+import React, { useEffect } from 'react';
+import MealList from './MealList.js';
+import MealForm from './MealForm.js';
+import { Container } from '@mui/material';
+import { useMealContext } from './MealContext.js';
+import { useAuthContext } from "../auth/AuthContext.js";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Navigation from '../utils/Navigation.js';
 
 function Meals() {
 
@@ -23,10 +22,11 @@ function Meals() {
         if (!user) {
             navigate("/");
         }
-    }, [user])
+    }, [user, navigate])
 
     return (
         <Container maxWidth="xl">
+            <Navigation />
             <MealForm />
             <MealList meals={meals} />
         </Container>

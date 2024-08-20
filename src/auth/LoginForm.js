@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import { login, logout } from './Firebase';
-import { Box, Button, Icon, Stack, Typography, TextField, Card, CardHeader, CardContent, Divider } from '@mui/material';
+import { Button, Stack, Typography, TextField, Divider } from '@mui/material';
 import { useAuthContext } from './AuthContext';
 
 
-export default function LoginForm(props) {
+export default function LoginForm() {
 
     const {user, logInWithEmailAndPassword} = useAuthContext();
 

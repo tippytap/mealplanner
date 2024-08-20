@@ -18,6 +18,7 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
 
     const auth = getAuth();
+    console.log(auth);
 
     const logInWithEmailAndPassword = async (email, password) => {
         signInWithEmailAndPassword(auth, email, password)

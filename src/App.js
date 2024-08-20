@@ -1,36 +1,42 @@
 import './App.css';
-import React, { useContext } from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
-import Meals from "./Meals.js";
-import Login from "./Login.js";
-import { MealProvider } from './MealContext.js';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Meals from "./meal/Meals.js";
+import Login from "./auth/Login.js";
+import { MealProvider } from './meal/MealContext.js';
+import { ListProvider } from './list/ListContext.js';
 import { Typography, Stack } from '@mui/material';
-import { AuthProvider } from './AuthContext.js';
-import Logout from "./Logout";
+import { AuthProvider } from './auth/AuthContext.js';
+import Lists from "./list/Lists.js";
+import DisplaySingleList from './utils/DisplaySingleList.js';
+import { SnackbarProvider } from './utils/SnackbarContext.js';
 
 export default function App() {
-
   return (
-
     <AuthProvider>
       <div className="App">
         <header className="App-header" style={{margin: "1em 0"}}>
           <Stack direction="column" spacing={2}>
             <Typography variant="h1" sx={{fontSize: "3rem", borderBottom: "1px solid grey"}} mt={2}>Meal Planner</Typography>
-            <Logout />
           </Stack>
         </header>
         <main style={{marginBottom: "5rem"}}>
-          <MealProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route exact path="/" element={<Login />} />
-                <Route path="/Meals" element={<Meals />} />
-                <Route path="/Login" element={<Login />} />
-              </Routes>
-            </BrowserRouter>
-          </MealProvider>
+          <SnackbarProvider>
+            <MealProvider>
+              <ListProvider>
+                <BrowserRouter>
+                  <Routes>
+                    <Route exact path="/" element={<Login />} />
+                    <Route path="/Meals" element={<Meals />} />
+                    <Route path="/Login" element={<Login />} />
+                    <Route path="/Lists" element={<Lists />} />
+                    <Route path="/Lists/:id" element={<DisplaySingleList />} />
+                  </Routes>
+                </BrowserRouter>
+              </ListProvider>
+            </MealProvider>
+          </SnackbarProvider>
         </main>
       </div>
     </AuthProvider>
