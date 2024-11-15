@@ -3,7 +3,6 @@ import { useMealContext } from './MealContext';
 import { Button, Stack, TextField, FormControl, Autocomplete } from '@mui/material';
 import { createFilterOptions } from '@mui/material';
 import { useSnackbarContext } from '../utils/SnackbarContext';
-import { useMenuAppBarContext } from '../utils/MenuAppBarContext';
 
 export default function MealFormControl(props) {
 

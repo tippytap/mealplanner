@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Container, Grid } from '@mui/material';
 import React, {useEffect} from 'react';
 import { useListContext } from './ListContext';
 import List from "./List.js";
@@ -14,7 +14,7 @@ export default function Lists() {
     const {auth} = useAuthContext();
     const [user] = useAuthState(auth);
     const navigate = useNavigate();
-    const {showGivenComponent, handleModalClose} = useMenuAppBarContext();
+    const {showGivenComponent} = useMenuAppBarContext();
 
     useEffect(() => {
         if (!user) {
@@ -28,9 +28,6 @@ export default function Lists() {
 
     return (
         <Container maxWidth="xl">
-            <Container sx={{width: "40%"}}>
-                <ListForm />
-            </Container>
             <Grid container spacing={2} alignItems="stretch" mt={5}>
                 {lists.map((list, i) => {
                     return (
