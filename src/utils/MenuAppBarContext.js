@@ -56,7 +56,7 @@ export const MenuAppBarProvider = ({children}) => {
     }
 
     const DrawerList = (
-        <Box sx={{ width: 251 }} role="presentation" onClick={toggleDrawer(false)}>
+        <Box sx={{ width: 251, justifyContent: "flex-end" }} onClick={toggleDrawer(false)}>
         <List>
             {["Meals", "Lists", "Logout", "Close"].map((text, index) => (
             <ListItem key={text} disablePadding>
