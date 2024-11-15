@@ -28,7 +28,7 @@ export default function MealList(props) {
                 </Container>
                 {props.meals.map((meal, i) => {
                     return (
-                        <Grid key={i} item xs={4}>
+                        <Grid key={i} item xs={12} md={4}>
                             <Meal 
                                 key={meal.docId}
                                 id={meal.id}

@@ -3,6 +3,7 @@ import { useMealContext } from './MealContext';
 import { Button, Stack, TextField, FormControl, Autocomplete } from '@mui/material';
 import { createFilterOptions } from '@mui/material';
 import { useSnackbarContext } from '../utils/SnackbarContext';
+import { useMenuAppBarContext } from '../utils/MenuAppBarContext';
 
 export default function MealFormControl(props) {
 
@@ -40,6 +41,7 @@ export default function MealFormControl(props) {
     }
 
     return (
+        <form>
     <Stack direction="column" spacing={2}>
         <TextField 
             variant="filled" 
@@ -108,6 +110,6 @@ export default function MealFormControl(props) {
             <Button variant="outlined" onClick={props.cancel}>Cancel</Button>
             <Button type="submit" onClick={handleSubmit} variant="contained">{props.submitText || "Add meal"}</Button>
         </Stack>
-        </Stack>
+        </Stack></form>
     )
 }

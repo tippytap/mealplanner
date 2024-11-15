@@ -21,9 +21,6 @@ export default function ListForm(props) {
 
   const {showMessage} = useSnackbarContext();
 
-    useEffect(() => {
-    }, [])
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => {
