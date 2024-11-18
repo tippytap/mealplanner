@@ -7,7 +7,8 @@ import { useMealContext } from './MealContext.js';
 import { useAuthContext } from "../auth/AuthContext.js";
 import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Navigation from '../utils/Navigation.js';
+import MealFormControl from './MealFormControl.js';
+import { useMenuAppBarContext } from '../utils/MenuAppBarContext.js';
 
 function Meals() {
 
@@ -15,6 +16,8 @@ function Meals() {
 
     const {auth} = useAuthContext();
     const [user] = useAuthState(auth);
+
+    const {showGivenComponent, handleModalClose} = useMenuAppBarContext();
 
     const navigate = useNavigate();
 
@@ -24,12 +27,16 @@ function Meals() {
         }
     }, [user, navigate])
 
+    useEffect(() => {
+        showGivenComponent(<MealFormControl cancel={handleModalClose} />);
+    }, [])
+
     return (
+        <>
         <Container maxWidth="xl">
-            <Navigation />
-            <MealForm />
             <MealList meals={meals} />
         </Container>
+        </>
     )
 }
 

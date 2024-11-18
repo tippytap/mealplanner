@@ -11,8 +11,10 @@ import { AuthProvider } from './auth/AuthContext.js';
 import Lists from "./list/Lists.js";
 import DisplaySingleList from './utils/DisplaySingleList.js';
 import { SnackbarProvider } from './utils/SnackbarContext.js';
+import { MenuAppBarProvider } from './utils/MenuAppBarContext.js';
 
 export default function App() {
+
   return (
     <AuthProvider>
       <div className="App">
@@ -26,6 +28,7 @@ export default function App() {
             <MealProvider>
               <ListProvider>
                 <BrowserRouter>
+                <MenuAppBarProvider>
                   <Routes>
                     <Route exact path="/" element={<Login />} />
                     <Route path="/Meals" element={<Meals />} />
@@ -33,6 +36,7 @@ export default function App() {
                     <Route path="/Lists" element={<Lists />} />
                     <Route path="/Lists/:id" element={<DisplaySingleList />} />
                   </Routes>
+                </MenuAppBarProvider>
                 </BrowserRouter>
               </ListProvider>
             </MealProvider>

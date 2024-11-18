@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Modal from '@mui/material/Modal';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { styles } from '../Styles';
 import MealFormControl from './MealFormControl';
 
@@ -13,12 +12,6 @@ export default function MealForm(props) {
 
     return (
         <Box>
-            <Button variant="contained" onClick={handleOpen}>
-                <Stack direction="row" spacing={2}>
-                    <AddCircleOutlineIcon />
-                    <Typography>Create a new meal</Typography>
-                </Stack>
-            </Button>
             <Modal
                 open={open}
                 onClose={handleClose}
