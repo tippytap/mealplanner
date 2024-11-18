@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import { useListContext } from './ListContext';
 import List from "./List.js";
 import ListForm from './ListForm.js';
+import ListFormControl from './ListFormControl.js';
 import { useNavigate } from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useAuthContext } from '../auth/AuthContext.js';
@@ -14,7 +15,7 @@ export default function Lists() {
     const {auth} = useAuthContext();
     const [user] = useAuthState(auth);
     const navigate = useNavigate();
-    const {showGivenComponent} = useMenuAppBarContext();
+    const { showGivenComponent, handleModalClose } = useMenuAppBarContext();
 
     useEffect(() => {
         if (!user) {
@@ -23,7 +24,7 @@ export default function Lists() {
     }, [user, navigate])
 
     useEffect(() => {
-        showGivenComponent(<ListForm />);
+        showGivenComponent(<ListFormControl cancel={handleModalClose} />);
     }, []);
 
     return (

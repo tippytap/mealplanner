@@ -1,5 +1,5 @@
 import React, {useState, createContext, useContext} from 'react';
-import { AppBar, Toolbar, Fab, Container, Grid, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, List, Box, Button, IconButton, Typography, Modal } from '@mui/material';
+import { AppBar, Toolbar, Fab, Drawer, ListItem, ListItemButton, ListItemIcon, ListItemText, List, Box, IconButton, Modal } from '@mui/material';
 import { LunchDining, Checklist, Logout, MenuOpen, Close, Add } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { useAuthContext } from '../auth/AuthContext';
@@ -11,7 +11,6 @@ const MenuAppBarContext = createContext();
 export const useMenuAppBarContext = () => {
     return useContext(MenuAppBarContext);
 }
-
 
 export const MenuAppBarProvider = ({children}) => {
 
