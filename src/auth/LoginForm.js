@@ -24,17 +24,13 @@ export default function LoginForm() {
     }
 
     return (
-        <Stack direction="column" spacing={3} divider={<Divider />} sx={{width: "20vw", margin: "0 auto"}}>
+        <Stack direction="column" spacing={3} divider={<Divider />} sx={{width: {xs: 1, sm: "20vw"}, margin: "0 auto"}}>
             <Typography variant="h4">Login</Typography>
             <form onSubmit={handleSubmit}>
                 <Stack direction="column" spacing={3}>
-                    <Stack>
-                        <TextField id="email" label="Email" onChange={handleEmailChange} />
-                    </Stack>
-                    <Stack>
-                        <TextField type="password" id="password" label="Password" onChange={handlePasswordChange} />
-                    </Stack>
-                    <Button type="submit" variant="contained">Submit</Button>
+                    <TextField id="email" label="Email" onChange={handleEmailChange} />
+                    <TextField type="password" id="password" label="Password" onChange={handlePasswordChange} />
+                    <Button type="submit" variant="contained">Login</Button>
                 </Stack>
             </form>
         </Stack>
