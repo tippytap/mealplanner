@@ -16,6 +16,7 @@ import { MenuAppBarProvider } from './utils/MenuAppBarContext.js';
 export default function App() {
 
   return (
+    <SnackbarProvider>
     <AuthProvider>
       <div className="App">
         <header className="App-header" style={{margin: "1em 0"}}>
@@ -24,7 +25,6 @@ export default function App() {
           </Stack>
         </header>
         <main style={{marginBottom: "5rem"}}>
-          <SnackbarProvider>
             <MealProvider>
               <ListProvider>
                 <BrowserRouter>
@@ -40,9 +40,9 @@ export default function App() {
                 </BrowserRouter>
               </ListProvider>
             </MealProvider>
-          </SnackbarProvider>
         </main>
       </div>
     </AuthProvider>
+    </SnackbarProvider>
   );
 }
