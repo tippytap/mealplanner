@@ -24,7 +24,7 @@ export const MenuAppBarProvider = ({children}) => {
     });
 
     const [open, setOpen] = useState(false);
-    const {auth, logOut} = useAuthContext();
+    const {auth, logOut, user} = useAuthContext();
     const navigate = useNavigate();
     const [componentToRender, setComponentToRender] = useState("");
     const [modalOpen, setModalOpen] = useState(false);
@@ -89,36 +89,37 @@ export const MenuAppBarProvider = ({children}) => {
             handleModalClose
         }}>
             {children}
-        <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 1 }}>
-            <Toolbar>
-                <IconButton
-                    size="large"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    sx={{ mr: 3 }}
-                    onClick={toggleDrawer(true)}
+            {auth.currentUser && 
+            <AppBar position="fixed" color="primary" sx={{ top: 'auto', bottom: 1 }}>
+                <Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 3 }}
+                        onClick={toggleDrawer(true)}
+                    >
+                        <MenuOpen />
+                    </IconButton>
+                    <StyledFab color="secondary" aria-label="add" onClick={handleModalOpen}>
+                        <Add />
+                    </StyledFab>
+                </Toolbar>
+                <Drawer open={open} onClose={toggleDrawer(false)}>
+                    {DrawerList}
+                </Drawer>
+                <Modal
+                    open={modalOpen}
+                    onClose={handleModalClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
                 >
-                    <MenuOpen />
-                </IconButton>
-                <StyledFab color="secondary" aria-label="add" onClick={handleModalOpen}>
-                    <Add />
-                </StyledFab>
-            </Toolbar>
-            <Drawer open={open} onClose={toggleDrawer(false)}>
-                {DrawerList}
-            </Drawer>
-            <Modal
-                open={modalOpen}
-                onClose={handleModalClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={styles.modal}>
-                    {componentToRender || ""}
-                </Box>
-            </Modal>
-        </AppBar>
+                    <Box sx={styles.modal}>
+                        {componentToRender || ""}
+                    </Box>
+                </Modal>
+            </AppBar>}
         </MenuAppBarContext.Provider>
     )
 }
